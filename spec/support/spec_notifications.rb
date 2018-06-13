@@ -3,9 +3,9 @@ RSpec.configure do |config|
     any_failures = RSpec.world.filtered_examples.values.flatten.any?(&:exception)
 
     if any_failures
-      `terminal-notifier -message '❗️' && say 'something broke'`
+      `terminal-notifier -message '❗️' && say 'tests failing'`
     else
-      `terminal-notifier -message '✅' && say 'finished'`
+      `terminal-notifier -message '✅' && say 'tests passing'`
     end
   end
 end
