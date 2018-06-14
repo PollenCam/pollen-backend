@@ -17,11 +17,19 @@ describe User do
 
   describe "when new user" do
     it 'has an email' do
-      expect(User.new).to respond_to :email
+      User.new.email
     end
 
     it 'has a password' do
-      expect(User.new).to respond_to :password
+      User.new.password
+    end
+
+    it 'has an auth_token' do
+      User.new.auth_token
+    end
+
+    it 'has a full_name' do
+      User.new.full_name
     end
   end
 end
