@@ -15,17 +15,13 @@ describe User do
     }
   end
 
-  describe "when new user" do
-    it 'has an email' do
-      User.new.email
-    end
+  describe "attributes" do
+    before(:all) { @user = User.new }
 
-    it 'has a password' do
-      User.new.password
-    end
+    attributes = %w{ email password auth_token full_name }
 
-    it 'has an auth_token' do
-      User.new.auth_token
+    attributes.each do |attribute|
+      it("responds to ##{attribute}") { @user.send(attribute) }
     end
 
     it 'has a full_name' do
