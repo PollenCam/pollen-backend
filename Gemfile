@@ -15,6 +15,7 @@ group :development, :test do
   gem 'factory_bot', '~> 4.10.0'
   gem 'pry-rails', '~> 0.3.6'
   gem 'rspec-rails', '~> 3.7'
+  gem 'parallel_tests', '~> 2.21.3'
 end
 
 group :development do
