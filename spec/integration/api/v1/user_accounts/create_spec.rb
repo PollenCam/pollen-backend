@@ -16,24 +16,21 @@ RSpec.describe "Api::V1::UserAccounts#create", type: :request do
 
     it 'returns json' do
       post_with_params
-      expect { JSON.parse(response.body) }.to_not raise_error
+      expect { response_json }.to_not raise_error
     end
 
     it 'returns an auth token' do
       post_with_params
-      json = JSON.parse(response.body)
-      expect(json).to have_key "auth_token"
+      expect(response_json).to have_key "auth_token"
     end
 
     it 'returns a different auth token for each user' do
       post_with_params
-      json = JSON.parse(response.body)
-      first_token = json['auth_token']
+      first_token = response_json['auth_token']
 
       account_params[:user_account][:email] = FactoryBot.generate(:email)
       post_with_params
-      json = JSON.parse(response.body)
-      second_token = json['auth_token']
+      second_token = response_json['auth_token']
 
       expect(first_token).to_not eq second_token
     end
