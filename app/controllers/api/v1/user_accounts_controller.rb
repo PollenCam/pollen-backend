@@ -1,7 +1,12 @@
 class Api::V1::UserAccountsController < ApplicationController
   def create
-    User.create!(user_account_params)
-    render json: { auth_token: "lololol" }, status: :created
+    user = User.create(user_account_params)
+
+    if user.persisted?
+      render json: { auth_token: "lololol" }, status: :created
+    else
+      render json: { errors: user.errors }
+    end
   end
 
   private

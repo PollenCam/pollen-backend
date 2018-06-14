@@ -2,8 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::UserAccounts#create", type: :request do
   describe "POST /api/v1/user_accounts" do
+    def post_with_params
+      post(api_v1_user_accounts_path, params: account_params)
+    end
+
     let(:account_params) { Hash[user_account: { email: 'test@example.com', password: 'password' }] }
-    let(:post_with_params) { post(api_v1_user_accounts_path, params: account_params) }
 
     it "registers the user" do
       post_with_params
@@ -24,7 +27,23 @@ RSpec.describe "Api::V1::UserAccounts#create", type: :request do
       expect(response_json).to have_key "auth_token"
     end
 
-    it 'returns a different auth token for each user' do
+    context "when email taken" do
+      before(:all) do
+        FactoryBot.create(:user, email: 'test@example.com')
+      end
+
+      it 'does not create another user' do
+        expect { post_with_params }.not_to change { User.count }
+      end
+
+      it 'indicates email has been taken' do
+        post_with_params
+        expect(response_json.dig("errors", "email")).to include "has already been taken"
+      end
+    end
+
+
+    xit 'returns a different auth token for each user' do
       post_with_params
       first_token = response_json['auth_token']
 
