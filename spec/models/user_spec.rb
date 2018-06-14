@@ -23,9 +23,17 @@ describe User do
     attributes.each do |attribute|
       it("responds to ##{attribute}") { @user.send(attribute) }
     end
+  end
 
-    it 'has a full_name' do
-      User.new.full_name
+  describe "#token" do
+    before(:all) { FactoryBot.create(:user, auth_token: '12345') }
+
+    let(:user) { FactoryBot.build(:user) }
+
+    it 'has a unique auth_token' do
+      user.auth_token = '12345'
+      expect(user.valid?).to be false # Ugh, I hate having multiple layers of validations
+      expect { user.save(validate: false) }.to raise_error ActiveRecord::RecordNotUnique
     end
   end
 end

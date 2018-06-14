@@ -10,4 +10,6 @@ class User < ApplicationRecord
     lockable
     timeoutable
   }
+
+  validates :auth_token, uniqueness: true
 end
