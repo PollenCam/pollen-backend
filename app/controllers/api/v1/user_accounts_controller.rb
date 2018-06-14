@@ -3,9 +3,9 @@ class Api::V1::UserAccountsController < ApplicationController
     user = User.create(user_account_params)
 
     if user.persisted?
-      render json: { auth_token: "lololol" }, status: :created
+      render json: { auth_token: user.auth_token }, status: :created
     else
-      render json: { errors: user.errors }
+      render json: { errors: user.errors }, status: :bad_request
     end
   end
 

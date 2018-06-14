@@ -42,8 +42,7 @@ RSpec.describe "Api::V1::UserAccounts#create", type: :request do
       end
     end
 
-
-    xit 'returns a different auth token for each user' do
+    it 'returns a different auth token for each user' do
       post_with_params
       first_token = response_json['auth_token']
 
