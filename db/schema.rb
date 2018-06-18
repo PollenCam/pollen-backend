@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_18_202254) do
+ActiveRecord::Schema.define(version: 2018_06_18_210041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2018_06_18_202254) do
     t.text "locator"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["locator"], name: "index_events_on_locator"
+    t.index ["locator"], name: "index_events_on_locator", unique: true
     t.index ["owner_id"], name: "index_events_on_owner_id"
   end
 
