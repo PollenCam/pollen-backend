@@ -11,7 +11,7 @@ describe Event do
     end
 
     describe "relationships" do
-      relationships = %i{ memberships events }
+      relationships = %i{ memberships users }
 
       relationships.each do |relationship|
         it("Responds to ##{relationship}") { @event.send(relationship) }
@@ -19,12 +19,19 @@ describe Event do
     end
   end
 
-  describe "relations" do
+  describe "relationships" do
+    # Considering breaking complex relationship specs into their own file
     let(:owner) { FactoryBot.create(:user) }
     let(:event) { Event.new(owner: owner) }
 
-    it 'belongs to Users' do
+    it 'belongs to owner' do
       expect(event.owner).to be owner
+    end
+
+    it 'has many users' do
+      users = FactoryBot.create_list(:user, 3)
+      Membership.create(users.map {|user| Hash[user: user, event: event] })
+      expect(event.users).to eq users
     end
   end
 

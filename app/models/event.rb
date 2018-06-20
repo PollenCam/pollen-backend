@@ -4,7 +4,7 @@ class Event < ApplicationRecord
   belongs_to :owner, class_name: 'User'
 
   has_many :memberships
-  has_many :events, through: :memberships
+  has_many :users, through: :memberships
 
   def initialize(*)
     super
