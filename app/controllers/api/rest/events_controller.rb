@@ -3,7 +3,7 @@ class Api::Rest::EventsController < ApplicationController
     event = Event.create(event_params)
 
     if event.persisted?
-      render json: { locator: event.locator }, status: :created
+      render json: event.attributes, status: :created
     else
       render json: { errors: event.errors }, status: :bad_request
     end
