@@ -4,10 +4,18 @@ describe Event do
   describe "attributes" do
     before(:all) { @event = Event.new }
 
-    attributes = %w{ owner locator }
+    attributes = %i{ owner locator }
 
     attributes.each do |attribute|
       it("responds to ##{attribute}") { @event.send(attribute) }
+    end
+
+    describe "relationships" do
+      relationships = %i{ memberships events }
+
+      relationships.each do |relationship|
+        it("Responds to ##{relationship}") { @event.send(relationship) }
+      end
     end
   end
 
