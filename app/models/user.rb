@@ -11,6 +11,9 @@ class User < ApplicationRecord
     timeoutable
   }
 
+  has_many :memberships
+  has_many :events, through: :memberships
+
   validates :auth_token, uniqueness: true
 
   def initialize(*)

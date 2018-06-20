@@ -18,10 +18,18 @@ describe User do
   describe "attributes" do
     before(:all) { @user = User.new }
 
-    attributes = %w{ email password auth_token full_name }
+    attributes = %i{ email password auth_token full_name memberships events }
 
     attributes.each do |attribute|
       it("responds to ##{attribute}") { @user.send(attribute) }
+    end
+
+    describe "relationships" do
+      relationships = %i{ memberships events }
+
+      relationships.each do |relationship|
+        it("Responds to ##{relationship}") { @user.send(relationship) }
+      end
     end
   end
 
