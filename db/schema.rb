@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_18_210041) do
+ActiveRecord::Schema.define(version: 2018_06_19_162323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,18 @@ ActiveRecord::Schema.define(version: 2018_06_18_210041) do
     t.datetime "updated_at", null: false
     t.index ["locator"], name: "index_events_on_locator", unique: true
     t.index ["owner_id"], name: "index_events_on_owner_id"
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "event_id"
+    t.integer "role", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_memberships_on_event_id"
+    t.index ["role"], name: "index_memberships_on_role"
+    t.index ["user_id", "event_id"], name: "index_memberships_on_user_id_and_event_id"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -54,4 +66,6 @@ ActiveRecord::Schema.define(version: 2018_06_18_210041) do
   end
 
   add_foreign_key "events", "users", column: "owner_id"
+  add_foreign_key "memberships", "events"
+  add_foreign_key "memberships", "users"
 end

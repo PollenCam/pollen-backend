@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     namespace 'rest' do
       resources :user_accounts, only: [:create]
       resources :events, only: [:create]
+      resources :memberships, only: [:create]
     end
   end
 end
