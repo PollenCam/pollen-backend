@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe "Api::Rest::UserAccounts#create", type: :request do
-  describe "POST /api/rest/user_accounts" do
+RSpec.describe "Api::Rest::Events#create", type: :request do
+  describe "POST /api/rest/events" do
     def post_with_params
       post(api_rest_events_path, params: event_params)
     end
