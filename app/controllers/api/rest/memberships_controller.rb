@@ -1,6 +1,6 @@
 class Api::Rest::MembershipsController < ApplicationController
   def create
-    membership = Membership.create(membership_params)
+    membership = Membership.create(membership_params.merge(user: current_user))
 
     if membership.persisted?
       render json: membership.attributes, status: :created

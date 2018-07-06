@@ -7,11 +7,9 @@ RSpec.describe "Api::Rest::Memberships#create", type: :request do
     end
 
     context "with owner" do
-      # probably going to change this to infer the owner from the api token
-
       let(:user) { FactoryBot.create(:user) }
       let(:event) { FactoryBot.create(:event, owner: user) }
-      let(:membership_params) { Hash[membership: { user_id: user.id, event_id: event.id }] }
+      let(:membership_params) { Hash[membership: { event_id: event.id }] }
 
       it 'creates a membership' do
         expect { post_with_params }.to change { Membership.count }.by 1

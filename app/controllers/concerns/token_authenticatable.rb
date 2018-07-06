@@ -16,6 +16,7 @@ module TokenAuthenticatable
                     end
 
       sign_in(user, store: false) if user
+
       authenticate_user!
     end
   end

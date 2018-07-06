@@ -1,17 +1,11 @@
 class Api::Rest::EventsController < ApplicationController
   def create
-    event = Event.create(event_params)
+    event = Event.create(owner: current_user)
 
     if event.persisted?
       render json: event.attributes, status: :created
     else
       render json: { errors: event.errors }, status: :bad_request
     end
-  end
-
-  private
-
-  def event_params
-    params.require(:event).permit(:owner_id)
   end
 end

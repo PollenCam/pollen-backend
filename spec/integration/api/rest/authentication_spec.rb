@@ -21,7 +21,7 @@ RSpec.describe "AuthenticationTest", type: :request do
     context "with authentication token" do
       let(:user) { FactoryBot.create(:user) }
 
-      it 'returns user data' do
+      it 'returns 2xx success' do
         get(authentication_tests_path, headers: { 'X-AUTH-TOKEN': user.auth_token })
         expect(response).to be_successful
       end
