@@ -5,7 +5,7 @@ class Api::Rest::UserAccountsController < ApplicationController
     user = User.create(user_account_params)
 
     if user.persisted?
-      render json: user.attributes, status: :created
+      render json: user.attributes.slice(*%w{auth_token email}), status: :created
     else
       render json: { errors: user.errors }, status: :bad_request
     end
