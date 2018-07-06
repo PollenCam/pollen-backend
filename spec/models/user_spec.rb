@@ -18,7 +18,7 @@ describe User do
   describe "attributes" do
     before(:all) { @user = User.new }
 
-    attributes = %i{ email password auth_token full_name memberships events }
+    attributes = %i{ email password auth_token full_name memberships }
 
     attributes.each do |attribute|
       it("responds to ##{attribute}") { @user.send(attribute) }
