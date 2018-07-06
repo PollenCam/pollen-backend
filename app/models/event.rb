@@ -1,10 +1,10 @@
 require 'securerandom'
 
 class Event < ApplicationRecord
-  belongs_to :owner, class_name: 'User'
-
   has_many :memberships
   has_many :users, through: :memberships
+
+  validates :locator, uniqueness: true
 
   def initialize(*)
     super
@@ -16,6 +16,10 @@ class Event < ApplicationRecord
       self.locator = generate_locator
       break self.locator unless Event.find_by(locator: self.locator)
     end
+  end
+
+  def owner
+    memberships.find_by(role: :owner).user
   end
 
   private

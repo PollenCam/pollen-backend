@@ -4,7 +4,7 @@ describe Event do
   describe "attributes" do
     before(:all) { @event = Event.new }
 
-    attributes = %i{ owner locator }
+    attributes = %i{ locator }
 
     attributes.each do |attribute|
       it("responds to ##{attribute}") { @event.send(attribute) }
@@ -22,15 +22,18 @@ describe Event do
   describe "relationships" do
     # Considering breaking complex relationship specs into their own file
     let(:owner) { FactoryBot.create(:user) }
-    let(:event) { Event.new(owner: owner) }
+    let(:event) { Event.create }
 
     it 'belongs to owner' do
-      expect(event.owner).to be owner
+      FactoryBot.create(:membership, event: event, user: owner, role: :owner)
+      expect(event.owner).to eq owner
     end
 
     it 'has many users' do
       users = FactoryBot.create_list(:user, 3)
-      Membership.create(users.map {|user| Hash[user: user, event: event] })
+      users.each do |user|
+        FactoryBot.create(:membership, user: user, event: event)
+      end
       expect(event.users).to eq users
     end
   end
@@ -38,7 +41,8 @@ describe Event do
   describe "locator" do
     before(:all) do
       @rando = FactoryBot.create(:user)
-      FactoryBot.create(:event, owner: @rando, locator: '12345')
+      event = FactoryBot.create(:event, locator: '12345')
+      membership = FactoryBot.create(:membership, event: event, user: @rando, role: :owner)
     end
 
     let(:event) { FactoryBot.build(:event, locator: nil) }
@@ -57,8 +61,10 @@ describe Event do
       context "with locator collisions" do
         before do
           # FactoryBot.create(:event, owner: @rando, locator: '12345') # This is done in a previous before block
-          FactoryBot.create(:event, owner: @rando, locator: '23456')
-          FactoryBot.create(:event, owner: @rando, locator: '34567')
+          e1 = FactoryBot.create(:event, locator: '23456')
+          e2 = FactoryBot.create(:event, locator: '34567')
+          FactoryBot.create(:membership, event: e1, user: @rando, role: :owner)
+          FactoryBot.create(:membership, event: e2, user: @rando, role: :owner)
 
           allow_any_instance_of(Event).to receive(:generate_locator).and_return('12345', '23456', '34567', '45678')
         end

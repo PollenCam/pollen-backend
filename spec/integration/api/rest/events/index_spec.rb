@@ -5,8 +5,7 @@ RSpec.describe "Api::Rest::Events#index", type: :request do
     context "with owned event and subscribed event" do
       it 'returns both events' do
         owner, friend = FactoryBot.create_list(:user, 2)
-        owners_event  = FactoryBot.create(:event, owner: owner)
-        friends_event = FactoryBot.create(:event, owner: friend)
+        owners_event, friends_event  = FactoryBot.create_list(:event, 2)
         ownership     = FactoryBot.create(:membership, event: owners_event, user: owner, role: :owner)
         membership    = FactoryBot.create(:membership, event: friends_event, user: owner)
 

@@ -4,7 +4,7 @@ class Api::Rest::EventsController < ApplicationController
   end
 
   def create
-    event = Event.create(owner: current_user)
+    event = Event.create
     event.memberships.create(user: current_user, role: :owner)
 
     if event.persisted?

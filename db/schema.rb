@@ -10,18 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_19_162323) do
+ActiveRecord::Schema.define(version: 2018_07_06_212551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "events", force: :cascade do |t|
-    t.bigint "owner_id"
     t.text "locator"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["locator"], name: "index_events_on_locator", unique: true
-    t.index ["owner_id"], name: "index_events_on_owner_id"
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -65,7 +63,6 @@ ActiveRecord::Schema.define(version: 2018_06_19_162323) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
-  add_foreign_key "events", "users", column: "owner_id"
   add_foreign_key "memberships", "events"
   add_foreign_key "memberships", "users"
 end

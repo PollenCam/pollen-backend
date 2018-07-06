@@ -8,7 +8,7 @@ RSpec.describe "Api::Rest::Memberships#create", type: :request do
 
     context "with owner" do
       let(:user) { FactoryBot.create(:user) }
-      let(:event) { FactoryBot.create(:event, owner: user) }
+      let(:event) { FactoryBot.create(:event) }
       let(:membership_params) { Hash[membership: { event_id: event.id }] }
 
       it 'creates a membership' do
