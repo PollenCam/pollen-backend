@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Api::Rest::Events#create", type: :request do
   describe "POST /api/rest/events" do
     def post_with_params
-      post(api_rest_events_path, params: event_params)
+      post(api_rest_events_path, params: event_params, headers: { 'X-AUTH-TOKEN': owner.auth_token })
     end
 
     context "with owner" do

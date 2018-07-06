@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Api::Rest::Memberships#create", type: :request do
   describe "POST /api/rest/memberships" do
     def post_with_params
-      post(api_rest_memberships_path, params: membership_params)
+      post(api_rest_memberships_path, params: membership_params, headers: { 'X-AUTH-TOKEN': user.auth_token })
     end
 
     context "with owner" do

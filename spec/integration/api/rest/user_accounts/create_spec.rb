@@ -8,6 +8,12 @@ RSpec.describe "Api::Rest::UserAccounts#create", type: :request do
 
     let(:account_params) { Hash[user_account: { email: 'test@example.com', password: 'password' }] }
 
+    it 'does not require authentication' do
+      post_with_params
+      expect(request.headers['X-AUTH-TOKEN']).to be_nil
+      expect(response).to be_successful
+    end
+
     it "registers the user" do
       post_with_params
       expect(response).to have_http_status(:created)

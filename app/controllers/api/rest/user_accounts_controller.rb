@@ -1,4 +1,6 @@
 class Api::Rest::UserAccountsController < ApplicationController
+  skip_before_action :authenticate_user_from_token!, only: :create
+
   def create
     user = User.create(user_account_params)
 
