@@ -9,7 +9,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :events, only: [:create]
+      resources :events, only: [:index, :create]
       resources :memberships, only: [:create]
     end
   end
