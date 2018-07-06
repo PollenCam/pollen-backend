@@ -3,7 +3,12 @@ Rails.application.routes.draw do
 
   namespace 'api' do
     namespace 'rest' do
-      resources :user_accounts, only: [:create]
+      resources :user_accounts, only: [:create] do
+        collection do
+          post 'sign_in', 'user_accounts': :sign_in
+        end
+      end
+
       resources :events, only: [:create]
       resources :memberships, only: [:create]
     end
