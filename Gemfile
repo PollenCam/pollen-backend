@@ -16,6 +16,7 @@ group :development, :test do
   gem 'pry-rails', '~> 0.3.6'
   gem 'rspec-rails', '~> 3.7'
   gem 'parallel_tests', '~> 2.21.3'
+  gem 'terminal-notifier', '~> 2.0.0'
 end
 
 group :development do
