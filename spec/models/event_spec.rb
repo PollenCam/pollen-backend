@@ -34,7 +34,8 @@ describe Event do
       users.each do |user|
         FactoryBot.create(:membership, user: user, event: event)
       end
-      expect(event.users).to eq users
+
+      expect(event.users).to match_array users
     end
   end
 
