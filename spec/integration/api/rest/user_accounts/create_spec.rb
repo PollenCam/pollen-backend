@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Api::Rest::UserAccounts#create", type: :request do
   describe "POST /api/rest/user_accounts" do
     def post_with_params
-      post(api_rest_user_accounts_path, params: account_params)
+      post(api_rest_user_accounts_path, params: account_params, as: :json)
     end
 
     let(:account_params) { Hash[user_account: { email: 'test@example.com', password: 'password' }] }

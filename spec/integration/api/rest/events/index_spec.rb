@@ -9,7 +9,7 @@ RSpec.describe "Api::Rest::Events#index", type: :request do
         ownership     = FactoryBot.create(:membership, event: owners_event, user: owner, role: :owner)
         membership    = FactoryBot.create(:membership, event: friends_event, user: owner)
 
-        get api_rest_events_path, headers: { 'X-AUTH-TOKEN': owner.auth_token }
+        get api_rest_events_path, headers: { 'X-AUTH-TOKEN': owner.auth_token }, as: :json
 
         expect(response_json['events'].length).to eq 2
       end

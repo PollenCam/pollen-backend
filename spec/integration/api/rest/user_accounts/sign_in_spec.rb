@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Api::Rest::UserAccounts#sign_in", type: :request do
   describe "POST /api/rest/user_accounts/sign_in" do
     def post_with_params
-      post(sign_in_api_rest_user_accounts_path, params: account_params)
+      post(sign_in_api_rest_user_accounts_path, params: account_params, as: :json)
     end
 
     let(:user) { FactoryBot.create(:user) }

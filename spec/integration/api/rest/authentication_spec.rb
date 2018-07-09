@@ -13,7 +13,7 @@ RSpec.describe "AuthenticationTest", type: :request do
   describe "GET authenticated endpoint" do
     context "without authentication token" do
       it "returns unauthorized" do
-        get(authentication_tests_path)
+        get(authentication_tests_path, as: :json)
         expect(response).to be_unauthorized
       end
     end
@@ -22,7 +22,7 @@ RSpec.describe "AuthenticationTest", type: :request do
       let(:user) { FactoryBot.create(:user) }
 
       it 'returns 2xx success' do
-        get(authentication_tests_path, headers: { 'X-AUTH-TOKEN': user.auth_token })
+        get(authentication_tests_path, headers: { 'X-AUTH-TOKEN': user.auth_token }, as: :json)
         expect(response).to be_successful
       end
     end
