@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Why hello there, README. I didn't see you there the past...few months.
 
-Things you may want to cover:
+Anyway, I should probably document stuff here.
 
-* Ruby version
+# Environment Variables
 
-* System dependencies
+## Production
 
-* Configuration
+- `DEVISE_SECRET_KEY` - set this with `$ bundle exec rake secret`
 
-* Database creation
+## Development
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- `SPEC_NOTIFICATIONS` - this should be `true` if you're using macOS and you want audio / visual notifications for your test results
