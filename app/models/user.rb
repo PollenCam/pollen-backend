@@ -6,7 +6,7 @@ class User < ApplicationRecord
     rememberable
     trackable
     validatable
-    confirmable
+
     lockable
     timeoutable
   }

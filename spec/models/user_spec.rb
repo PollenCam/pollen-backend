@@ -8,7 +8,7 @@ describe User do
       recoverable
       registerable
       validatable
-      confirmable
+
       lockable
       timeoutable
       trackable
