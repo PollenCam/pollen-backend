@@ -25,10 +25,7 @@ class Event < ApplicationRecord
   end
 
   def policy
-    @policy ||= EventPolicy.new(
-      start_time: created_at || Time.now,
-      current_time: Time.now
-    )
+    @policy ||= EventPolicy.new(start_time: created_at || Time.now)
   end
 
   private

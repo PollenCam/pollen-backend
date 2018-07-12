@@ -98,6 +98,23 @@ describe Event do
       it 'is the same as its policy' do
         expect(event.can_upload?).to eq event.policy.can_upload?
       end
+
+      context "with the passing of time" do
+        before { Timecop.freeze(event.created_at) }
+
+        after { Timecop.return }
+
+        it 'can upload after exactly 24 hours' do
+          Timecop.freeze(24.hours.from_now)
+
+          expect(event.can_upload?).to be true
+        end
+
+        it 'cannot upload after more than 24 hours' do
+          Timecop.freeze(24.hours.from_now + 1)
+          expect(event.can_upload?).to be false
+        end
+      end
     end
 
     describe "#can_download?" do
@@ -108,6 +125,45 @@ describe Event do
 
       it 'is the same as its policy' do
         expect(event.can_download?).to eq event.policy.can_download?
+      end
+
+      context "with the passing of time" do
+        before { Timecop.freeze(event.created_at) }
+
+        after { Timecop.return }
+
+        it 'can download after exactly 14 days' do
+          Timecop.freeze(14.days.from_now)
+
+          expect(event.can_download?).to be true
+        end
+
+        it 'cannot download after more than 14 days' do
+          Timecop.freeze(14.days.from_now + 1)
+          expect(event.can_download?).to be false
+        end
+
+        context "with payment" do
+          it 'can download after 14 days' do
+            Timecop.freeze(14.days.from_now + 1)
+            event.policy.payment_at = Time.now
+            expect(event.can_download?).to be true
+          end
+
+          it 'can download 30 days after payment' do
+            Timecop.freeze(14.days.from_now + 1)
+            event.policy.payment_at = Time.now
+            Timecop.freeze(30.days.from_now)
+            expect(event.can_download?).to be true
+          end
+
+          it 'cannot download just after 30 days post-payment' do
+            Timecop.freeze(14.days.from_now + 1)
+            event.policy.payment_at = Time.now
+            Timecop.freeze(30.days.from_now + 1)
+            expect(event.can_download?).to be false
+          end
+        end
       end
     end
 
