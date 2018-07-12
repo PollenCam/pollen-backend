@@ -6,6 +6,8 @@ class Event < ApplicationRecord
 
   validates :locator, uniqueness: true
 
+  delegate :can_upload?, :can_download?, to: :policy
+
   def initialize(*)
     super
     assign_locator
@@ -28,8 +30,6 @@ class Event < ApplicationRecord
       current_time: Time.now
     )
   end
-
-  delegate :can_upload?, :can_download?, to: :policy
 
   private
 
