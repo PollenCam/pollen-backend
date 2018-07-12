@@ -1,16 +1,15 @@
 class EventPolicy
-  attr_accessor :start_time, :current_time, :payment_at, :end_time,
-                :upload_period, :free_download_period, :accepting_payments_period
+  attr_accessor :start_time, :payment_at, :end_time, :upload_period,
+                :free_download_period, :accepting_payments_period
 
   TWENTY_FOUR_HOURS = 24.hours
   FOURTEEN_DAYS = 14.days
   THIRTY_DAYS = 30.days
 
-  def initialize(start_time: , current_time: Time.now, payment_at: nil)
+  def initialize(start_time: , payment_at: nil)
     raise ArgumentError, 'Event start time must be before current time' if current_time < start_time
 
-    @start_time, @current_time, @payment_at, @end_time = \
-      start_time, current_time, payment_at, start_time + THIRTY_DAYS
+    @start_time, @payment_at, @end_time = start_time, payment_at, start_time + THIRTY_DAYS
 
     @upload_period = start_time..(start_time + TWENTY_FOUR_HOURS)
     @free_download_period = start_time..(start_time + FOURTEEN_DAYS)
@@ -28,6 +27,10 @@ class EventPolicy
   end
 
   private
+
+  def current_time
+    Time.now
+  end
 
   def free_downloads?
     free_download_period.include?(current_time)
