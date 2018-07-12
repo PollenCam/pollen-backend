@@ -1,7 +1,7 @@
 RSpec.configure do |config|
-  config.after(:suite) do
-    return unless RUBY_PLATFORM =~ /darwin/
+  next unless (RUBY_PLATFORM =~ /darwin/ && ENV['SPEC_NOTIFICATIONS'] =~ /\Atrue\Z/i)
 
+  config.after(:suite) do
     any_failures = RSpec.world.filtered_examples.values.flatten.any?(&:exception)
 
     if any_failures
