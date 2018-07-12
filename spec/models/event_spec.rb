@@ -77,4 +77,46 @@ describe Event do
       end
     end
   end
+
+  describe "#policy" do
+    let(:event) { FactoryBot.create(:event) }
+
+    it 'is an EventPolicy' do
+      expect(event.policy).to be_a EventPolicy
+    end
+
+    it "has a start_time of the event's creation time" do
+      expect(event.policy.start_time).to eq event.created_at
+    end
+
+    describe "#can_upload?" do
+      it 'delegates to its policy' do
+        expect(event.policy).to receive :can_upload?
+        event.can_upload?
+      end
+
+      it 'is the same as its policy' do
+        expect(event.can_upload?).to eq event.policy.can_upload?
+      end
+    end
+
+    describe "#can_download?" do
+      it 'delegates to its policy' do
+        expect(event.policy).to receive :can_download?
+        event.can_download?
+      end
+
+      it 'is the same as its policy' do
+        expect(event.can_download?).to eq event.policy.can_download?
+      end
+    end
+
+    context "when Event not persisted" do
+      let(:event) { FactoryBot.build(:event) }
+
+      it 'does not raise error' do
+        expect { event.policy }.to_not raise_error
+      end
+    end
+  end
 end

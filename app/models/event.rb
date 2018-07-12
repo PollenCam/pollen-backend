@@ -22,6 +22,15 @@ class Event < ApplicationRecord
     memberships.find_by(role: :owner).user
   end
 
+  def policy
+    @policy ||= EventPolicy.new(
+      start_time: created_at || Time.now,
+      current_time: Time.now
+    )
+  end
+
+  delegate :can_upload?, :can_download?, to: :policy
+
   private
 
   def generate_locator
