@@ -15,7 +15,7 @@ RSpec.describe "Api::Rest::Events#create", type: :request do
 
       it 'creates a membership with owner role' do
         expect { post_with_params }.to change { Membership.count }.by 1
-        new_membership = Membership.last
+        new_membership = Membership.find response_json['id']
         expect(new_membership.user).to eq owner
         expect(new_membership.role).to eq 'owner'
       end
