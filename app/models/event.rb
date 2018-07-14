@@ -31,6 +31,8 @@ class Event < ApplicationRecord
   private
 
   def generate_locator
-    SecureRandom.uuid.rpartition('-').last
+    alphanum = Array('A'..'Z') + Array(0..9)
+    confusing_chars = ['I', 'L', 1, 'O', 0]
+    (alphanum - confusing_chars).shuffle[0, 4].join
   end
 end

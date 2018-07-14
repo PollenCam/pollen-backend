@@ -42,19 +42,25 @@ describe Event do
   describe "locator" do
     before(:all) do
       @rando = FactoryBot.create(:user)
-      event = FactoryBot.create(:event, locator: '12345')
+      event = FactoryBot.create(:event, locator: '1234')
       membership = FactoryBot.create(:membership, event: event, user: @rando, role: :owner)
     end
 
-    let(:event) { FactoryBot.build(:event, locator: nil) }
+    let(:event) { FactoryBot.build(:event) }
 
     it 'has a unique locator' do
-      event.locator = '12345'
+      event.locator = '1234'
       expect(event.valid?).to be false # Ugh, I hate having multiple layers of validations
       expect { event.save(validate: false) }.to raise_error ActiveRecord::RecordNotUnique
     end
 
+    it 'is four digits long', focus: true do
+      expect(event.locator.length).to eq 4
+    end
+
     describe "#assign_locator" do
+      let(:event) { FactoryBot.build(:event, locator: nil) }
+
       it 'assigns a locator' do
         expect { event.assign_locator }.to change { event.locator }
       end
@@ -62,17 +68,17 @@ describe Event do
       context "with locator collisions" do
         before do
           # FactoryBot.create(:event, owner: @rando, locator: '12345') # This is done in a previous before block
-          e1 = FactoryBot.create(:event, locator: '23456')
-          e2 = FactoryBot.create(:event, locator: '34567')
+          e1 = FactoryBot.create(:event, locator: '2345')
+          e2 = FactoryBot.create(:event, locator: '3456')
           FactoryBot.create(:membership, event: e1, user: @rando, role: :owner)
           FactoryBot.create(:membership, event: e2, user: @rando, role: :owner)
 
-          allow_any_instance_of(Event).to receive(:generate_locator).and_return('12345', '23456', '34567', '45678')
+          allow_any_instance_of(Event).to receive(:generate_locator).and_return('1234', '2345', '3456', '4567')
         end
 
         it 'assigns a unique locator token' do
           event.assign_locator
-          expect(event.locator).to eq '45678'
+          expect(event.locator).to eq '4567'
         end
       end
     end
