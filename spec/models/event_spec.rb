@@ -54,12 +54,12 @@ describe Event do
       expect { event.save(validate: false) }.to raise_error ActiveRecord::RecordNotUnique
     end
 
-    it 'is four digits long', focus: true do
+    it 'is four digits long' do
       expect(event.locator.length).to eq 4
     end
 
     describe "#assign_locator" do
-      let(:event) { FactoryBot.build(:event, locator: nil) }
+      let(:event) { FactoryBot.build(:event) }
 
       it 'assigns a locator' do
         expect { event.assign_locator }.to change { event.locator }
@@ -78,6 +78,18 @@ describe Event do
 
         it 'assigns a unique locator token' do
           event.assign_locator
+          expect(event.locator).to eq '4567'
+        end
+      end
+
+      context "with cuss words in locator" do
+        before do
+          allow_any_instance_of(Event)
+            .to receive(:generate_locator)
+            .and_return('FUCK', 'CUNT', 'ASS1', '4567')
+        end
+
+        it 'assigns a tame locator token' do
           expect(event.locator).to eq '4567'
         end
       end

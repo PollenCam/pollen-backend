@@ -1,4 +1,4 @@
-require 'securerandom'
+require 'bad_words'
 
 class Event < ApplicationRecord
   has_many :memberships
@@ -16,7 +16,7 @@ class Event < ApplicationRecord
   def assign_locator
     loop do
       self.locator = generate_locator
-      break self.locator unless Event.find_by(locator: self.locator)
+      break self.locator unless includes_obscenities? || Event.find_by(locator: self.locator)
     end
   end
 
@@ -34,5 +34,9 @@ class Event < ApplicationRecord
     alphanum = Array('A'..'Z') + Array(0..9)
     confusing_chars = ['I', 'L', 1, 'O', 0]
     (alphanum - confusing_chars).shuffle[0, 4].join
+  end
+
+  def includes_obscenities?
+    BadWords.any? {|word| self.locator.downcase.include?(word) }
   end
 end
