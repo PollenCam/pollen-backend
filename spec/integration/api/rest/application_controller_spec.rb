@@ -13,7 +13,7 @@ RSpec.describe TestApplicationsController, type: :request do
   let(:user) { FactoryBot.create(:user) }
 
   describe "GET authenticated JSON endpoint" do
-    context "without json request" do
+    context "without headers CONTENT_TYPE and ACCEPT as application/json" do
       it "returns Not Acceptable" do
         get(test_application_path)
 
@@ -24,7 +24,7 @@ RSpec.describe TestApplicationsController, type: :request do
       end
     end
 
-    context "with json request" do
+    context "with headers CONTENT_TYPE and ACCEPT as application/json" do
       context "without authentication token" do
         it "returns unauthorized" do
           get(test_application_path, as: :json)
