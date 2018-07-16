@@ -14,10 +14,9 @@ RSpec.describe "Api::Rest::Events#create", type: :request do
       end
 
       it 'creates a membership with owner role' do
-        expect { post_with_params }.to change { Membership.count }.by 1
-        new_membership = Membership.find response_json['id']
-        expect(new_membership.user).to eq owner
-        expect(new_membership.role).to eq 'owner'
+        expect { post_with_params }.to change { Membership.where(user: owner, role: :owner).count }.by 1
+        new_event_id = response_json['id']
+        expect(Membership.find_by(user: owner, role: :owner, event: new_event_id)).to be_present
       end
 
       it 'has a locator' do

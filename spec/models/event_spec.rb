@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Event do
+RSpec.describe Event do
   describe "attributes" do
     before(:all) { @event = Event.new }
 

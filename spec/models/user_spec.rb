@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe User do
+RSpec.describe User do
   it 'is devise-y' do
     expect(User.devise_modules).to eq %i{
       database_authenticatable

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EventPolicy do
+RSpec.describe EventPolicy do
   let!(:policy) { EventPolicy.new(start_time: Time.now) }
 
   before { Timecop.freeze(policy.start_time) }
