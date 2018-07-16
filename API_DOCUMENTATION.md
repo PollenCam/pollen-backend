@@ -1,3 +1,54 @@
+<!-- toc -->
+
+<!-- Generated using markdown-toc, except that you have to remove all the %23 in the anchor tags -->
+
+- [TestApplicationsController](#testapplicationscontroller)
+  * [GET authenticated JSON endpoint](#get-authenticated-json-endpoint)
+    + [without headers CONTENT_TYPE and ACCEPT as application/json](#without-headers-content_type-and-accept-as-applicationjson)
+      - [returns Not Acceptable](#returns-not-acceptable)
+    + [with headers CONTENT_TYPE and ACCEPT as application/json](#with-headers-content_type-and-accept-as-applicationjson)
+      - [without authentication token](#without-authentication-token)
+        * [returns unauthorized](#returns-unauthorized)
+      - [with authentication token](#with-authentication-token)
+        * [returns 2xx success](#returns-2xx-success)
+- [Api::Rest::Events#create](#apiresteventscreate)
+  * [POST /api/rest/events](#post-apirestevents)
+    + [with owner](#with-owner)
+      - [creates an event](#creates-an-event)
+      - [creates a membership with owner role](#creates-a-membership-with-owner-role)
+      - [has a locator](#has-a-locator)
+- [Api::Rest::Events#index](#apiresteventsindex)
+  * [GET /api/rest/events](#get-apirestevents)
+    + [when user owns an event](#when-user-owns-an-event)
+      - [returns owned event](#returns-owned-event)
+    + [when user owns an event and has a membership to another event](#when-user-owns-an-event-and-has-a-membership-to-another-event)
+      - [returns both events](#returns-both-events)
+- [Api::Rest::Memberships#create](#apirestmembershipscreate)
+  * [POST /api/rest/memberships](#post-apirestmemberships)
+    + [with owner](#with-owner-1)
+      - [creates a membership](#creates-a-membership)
+      - [has attributes](#has-attributes)
+- [Api::Rest::UserAccounts#create](#apirestuseraccountscreate)
+  * [POST /api/rest/user_accounts](#post-apirestuser_accounts)
+    + [does not require authentication](#does-not-require-authentication)
+    + [registers the user](#registers-the-user)
+    + [creates a new User](#creates-a-new-user)
+    + [returns json](#returns-json)
+    + [returns an auth token](#returns-an-auth-token)
+    + [returns a different auth token for each user](#returns-a-different-auth-token-for-each-user)
+    + [when email taken](#when-email-taken)
+      - [does not create another user](#does-not-create-another-user)
+      - [indicates email has been taken](#indicates-email-has-been-taken)
+- [Api::Rest::UserAccounts#sign_in](#apirestuseraccountssign_in)
+  * [POST /api/rest/user_accounts/sign_in](#post-apirestuser_accountssign_in)
+    + [does not require authentication](#does-not-require-authentication-1)
+    + [when given correct login information](#when-given-correct-login-information)
+      - [returns user attributes](#returns-user-attributes)
+    + [when given incorrect login information](#when-given-incorrect-login-information)
+      - [returns errors](#returns-errors)
+
+<!-- tocstop -->
+
 # TestApplicationsController
 ## GET authenticated JSON endpoint
 ### without headers CONTENT_TYPE and ACCEPT as application/json
