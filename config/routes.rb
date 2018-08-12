@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
       resources :events, only: [:index, :create]
       resources :memberships, only: [:create]
+      resources :presigned_urls, only: [:create]
     end
   end
 end
