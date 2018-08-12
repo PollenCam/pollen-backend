@@ -1,5 +1,3 @@
-require 'bad_words'
-
 class Event < ApplicationRecord
   has_many :memberships
   has_many :users, through: :memberships
