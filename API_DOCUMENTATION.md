@@ -356,7 +356,7 @@ Response body:
 
 ```
 {
-  "presigned_url": "https://pollencam-user-uploads.s3.us-east-2.amazonaws.com/e10bf76a-4771-40dc-8181-9462e19671ff?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJTTRO24TYMNZTDBQ%2F20180812%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20180812T222723Z&X-Amz-Expires=259200&X-Amz-SignedHeaders=host&X-Amz-Signature=cfba467df51ca08d58579c07d4a77925f673cb7a28a686c710cff6add35a4173"
+  "presigned_url": "https://blabla.bla"
 }
 ```
 # Api::Rest::Memberships#create
