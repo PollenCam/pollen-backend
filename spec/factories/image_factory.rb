@@ -1,3 +1,3 @@
 FactoryBot.define do
-  factory :event
+  factory :image
 end

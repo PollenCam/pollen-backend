@@ -1,4 +1,4 @@
-<!-- Generated using `$ markdown-toc -i API_DOCUMENTATION.md`, except that you have to remove all the %23 in the anchor tags -->
+<!-- Generated using `$ markdown-toc -i API_DOCUMENTATION.md`, except that you have to remove all the  in the anchor tags -->
 
 <!-- toc -->
 
@@ -11,28 +11,33 @@
         * [returns unauthorized](#returns-unauthorized)
       - [with authentication token](#with-authentication-token)
         * [returns 2xx success](#returns-2xx-success)
-- [Api::Rest::Events#create](#apirestevents%23create)
+- [Api::Rest::Events#create](#apiresteventscreate)
   * [POST /api/rest/events](#post-apirestevents)
     + [with owner](#with-owner)
       - [creates an event](#creates-an-event)
       - [creates a membership with owner role](#creates-a-membership-with-owner-role)
       - [has a locator](#has-a-locator)
-- [Api::Rest::Events#index](#apirestevents%23index)
+- [Api::Rest::PresignedUrls#create](#apirestpresignedurlscreate)
+  * [POST /api/rest/events/:event_id/images](#post-apiresteventsevent_idimages)
+    + [creates an image](#creates-an-image)
+    + [returns a pre-signed url](#returns-a-pre-signed-url)
+    + [expires in 3 days](#expires-in-3-days)
+    + [without membership](#without-membership)
+      - [cannot add an image](#cannot-add-an-image)
+      - [as attendee](#as-attendee)
+        * [can add an image](#can-add-an-image)
+- [Api::Rest::Events#index](#apiresteventsindex)
   * [GET /api/rest/events](#get-apirestevents)
     + [when user owns an event](#when-user-owns-an-event)
       - [returns owned event](#returns-owned-event)
     + [when user owns an event and has a membership to another event](#when-user-owns-an-event-and-has-a-membership-to-another-event)
       - [returns both events](#returns-both-events)
-- [Api::Rest::PresignedUrls#create](#apirestpresignedurls%23create)
-  * [POST /api/rest/presigned_urls](#post-apirestpresigned_urls)
-    + [returns a pre-signed url](#returns-a-pre-signed-url)
-    + [expires in 3 days](#expires-in-3-days)
-- [Api::Rest::Memberships#create](#apirestmemberships%23create)
+- [Api::Rest::Memberships#create](#apirestmembershipscreate)
   * [POST /api/rest/memberships](#post-apirestmemberships)
     + [with owner](#with-owner-1)
       - [creates a membership](#creates-a-membership)
       - [has attributes](#has-attributes)
-- [Api::Rest::UserAccounts#create](#apirestuseraccounts%23create)
+- [Api::Rest::UserAccounts#create](#apirestuseraccountscreate)
   * [POST /api/rest/user_accounts](#post-apirestuser_accounts)
     + [does not require authentication](#does-not-require-authentication)
     + [registers the user](#registers-the-user)
@@ -43,7 +48,7 @@
     + [when email taken](#when-email-taken)
       - [does not create another user](#does-not-create-another-user)
       - [indicates email has been taken](#indicates-email-has-been-taken)
-- [Api::Rest::UserAccounts#sign_in](#apirestuseraccounts%23sign_in)
+- [Api::Rest::UserAccounts#sign_in](#apirestuseraccountssign_in)
   * [POST /api/rest/user_accounts/sign_in](#post-apirestuser_accountssign_in)
     + [does not require authentication](#does-not-require-authentication-1)
     + [when given correct login information](#when-given-correct-login-information)
@@ -160,9 +165,9 @@ Response body:
 ```
 {
   "id": 1,
-  "locator": "CET6",
-  "created_at": "2018-08-12T22:27:22.358Z",
-  "updated_at": "2018-08-12T22:27:22.358Z"
+  "locator": "E7H2",
+  "created_at": "2018-08-17T12:45:24.428Z",
+  "updated_at": "2018-08-17T12:45:24.428Z"
 }
 ```
 #### creates a membership with owner role
@@ -190,9 +195,9 @@ Response body:
 ```
 {
   "id": 2,
-  "locator": "5XBP",
-  "created_at": "2018-08-12T22:27:22.418Z",
-  "updated_at": "2018-08-12T22:27:22.418Z"
+  "locator": "6RNF",
+  "created_at": "2018-08-17T12:45:24.510Z",
+  "updated_at": "2018-08-17T12:45:24.510Z"
 }
 ```
 #### has a locator
@@ -220,9 +225,178 @@ Response body:
 ```
 {
   "id": 3,
-  "locator": "4V8E",
-  "created_at": "2018-08-12T22:27:22.444Z",
-  "updated_at": "2018-08-12T22:27:22.444Z"
+  "locator": "7YTF",
+  "created_at": "2018-08-17T12:45:24.534Z",
+  "updated_at": "2018-08-17T12:45:24.534Z"
+}
+```
+# Api::Rest::PresignedUrls#create
+## POST /api/rest/events/:event_id/images
+### creates an image
+Request to: `/api/rest/events/4/images`
+
+Request parameters:
+```
+null
+```
+
+Request headers:
+
+```
+REQUEST_METHOD: POST
+RAW_POST_DATA: null
+HTTP_X_AUTH_TOKEN: 00000005
+HTTP_ACCEPT: application/json
+CONTENT_TYPE: application/json
+```
+_______
+Response status: `201 Created`
+
+Response body:
+
+```
+{
+  "image": {
+    "id": 1,
+    "presigned_url": "https://pollencam-user-uploads.s3.us-east-2.amazonaws.com/87bf91bc-bfe4-47be-b8ad-e0fd32c57f76?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=THIS_IS_A_FAKE_ACCESS_KEY%2F20180817%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20180817T124524Z&X-Amz-Expires=259200&X-Amz-SignedHeaders=host&X-Amz-Signature=8220461b14ec56636b8f89e0a7544d26db581e780d714c0f36875c083bca860d",
+    "final_url": null,
+    "uploaded_at": null,
+    "membership_id": 4,
+    "created_at": "2018-08-17T12:45:24.595Z",
+    "updated_at": "2018-08-17T12:45:24.595Z"
+  }
+}
+```
+### returns a pre-signed url
+Request to: `/api/rest/events/5/images`
+
+Request parameters:
+```
+null
+```
+
+Request headers:
+
+```
+REQUEST_METHOD: POST
+RAW_POST_DATA: null
+HTTP_X_AUTH_TOKEN: 00000006
+HTTP_ACCEPT: application/json
+CONTENT_TYPE: application/json
+```
+_______
+Response status: `201 Created`
+
+Response body:
+
+```
+{
+  "image": {
+    "id": 2,
+    "presigned_url": "https://pollencam-user-uploads.s3.us-east-2.amazonaws.com/ec2c01cb-9862-4f03-900d-c2125c5d6db6?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=THIS_IS_A_FAKE_ACCESS_KEY%2F20180817%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20180817T124524Z&X-Amz-Expires=259200&X-Amz-SignedHeaders=host&X-Amz-Signature=65f37f8da15a19e5ec608250cb2ed0eef0411c6ba5da7be5bdf3c6442986232a",
+    "final_url": null,
+    "uploaded_at": null,
+    "membership_id": 5,
+    "created_at": "2018-08-17T12:45:24.627Z",
+    "updated_at": "2018-08-17T12:45:24.627Z"
+  }
+}
+```
+### expires in 3 days
+Request to: `/api/rest/events/6/images`
+
+Request parameters:
+```
+null
+```
+
+Request headers:
+
+```
+REQUEST_METHOD: POST
+RAW_POST_DATA: null
+HTTP_X_AUTH_TOKEN: 00000007
+HTTP_ACCEPT: application/json
+CONTENT_TYPE: application/json
+```
+_______
+Response status: `201 Created`
+
+Response body:
+
+```
+{
+  "image": {
+    "id": 3,
+    "presigned_url": "https://pollencam-user-uploads.s3.us-east-2.amazonaws.com/d9c36ed0-4ee0-4c60-bbcb-8db41eb43845?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=THIS_IS_A_FAKE_ACCESS_KEY%2F20180817%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20180817T124524Z&X-Amz-Expires=259200&X-Amz-SignedHeaders=host&X-Amz-Signature=1f7b717fe94bca1aa07a79b6578e781b8fbe4809a40aeb60b9cd475894ef549d",
+    "final_url": null,
+    "uploaded_at": null,
+    "membership_id": 6,
+    "created_at": "2018-08-17T12:45:24.659Z",
+    "updated_at": "2018-08-17T12:45:24.659Z"
+  }
+}
+```
+### without membership
+#### cannot add an image
+Request to: `/api/rest/events/7/images`
+
+Request parameters:
+```
+null
+```
+
+Request headers:
+
+```
+REQUEST_METHOD: POST
+RAW_POST_DATA: null
+HTTP_X_AUTH_TOKEN: 00000009
+HTTP_ACCEPT: application/json
+CONTENT_TYPE: application/json
+```
+_______
+Response status: `401 Unauthorized`
+
+Response body:
+
+```
+NONE
+```
+#### as attendee
+##### can add an image
+Request to: `/api/rest/events/10/images`
+
+Request parameters:
+```
+null
+```
+
+Request headers:
+
+```
+REQUEST_METHOD: POST
+RAW_POST_DATA: null
+HTTP_X_AUTH_TOKEN: 00000011
+HTTP_ACCEPT: application/json
+CONTENT_TYPE: application/json
+```
+_______
+Response status: `201 Created`
+
+Response body:
+
+```
+{
+  "image": {
+    "id": 4,
+    "presigned_url": "https://pollencam-user-uploads.s3.us-east-2.amazonaws.com/d5d197e0-73ee-46d3-81d1-cd39897aeb40?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=THIS_IS_A_FAKE_ACCESS_KEY%2F20180817%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20180817T124524Z&X-Amz-Expires=259200&X-Amz-SignedHeaders=host&X-Amz-Signature=7fe872f7e54bc3f6e7c4263b9bf9b1b903902ff170237db355ede52570c6f2c5",
+    "final_url": null,
+    "uploaded_at": null,
+    "membership_id": 10,
+    "created_at": "2018-08-17T12:45:24.760Z",
+    "updated_at": "2018-08-17T12:45:24.760Z"
+  }
 }
 ```
 # Api::Rest::Events#index
@@ -241,7 +415,7 @@ Request headers:
 ```
 REQUEST_METHOD: GET
 QUERY_STRING: null
-HTTP_X_AUTH_TOKEN: 00000006
+HTTP_X_AUTH_TOKEN: 00000013
 HTTP_ACCEPT: application/json
 CONTENT_TYPE: application/json
 ```
@@ -254,10 +428,10 @@ Response body:
 {
   "events": [
     {
-      "id": 5,
-      "locator": "CX57",
-      "created_at": "2018-08-12T22:27:22.487Z",
-      "updated_at": "2018-08-12T22:27:22.487Z"
+      "id": 12,
+      "locator": "8QPS",
+      "created_at": "2018-08-17T12:45:24.789Z",
+      "updated_at": "2018-08-17T12:45:24.789Z"
     }
   ]
 }
@@ -276,7 +450,7 @@ Request headers:
 ```
 REQUEST_METHOD: GET
 QUERY_STRING: null
-HTTP_X_AUTH_TOKEN: 00000008
+HTTP_X_AUTH_TOKEN: 00000015
 HTTP_ACCEPT: application/json
 CONTENT_TYPE: application/json
 ```
@@ -289,74 +463,18 @@ Response body:
 {
   "events": [
     {
-      "id": 6,
-      "locator": "4H9D",
-      "created_at": "2018-08-12T22:27:22.524Z",
-      "updated_at": "2018-08-12T22:27:22.524Z"
+      "id": 13,
+      "locator": "4P2V",
+      "created_at": "2018-08-17T12:45:24.829Z",
+      "updated_at": "2018-08-17T12:45:24.829Z"
     },
     {
-      "id": 7,
-      "locator": "KFPM",
-      "created_at": "2018-08-12T22:27:22.538Z",
-      "updated_at": "2018-08-12T22:27:22.538Z"
+      "id": 14,
+      "locator": "83UA",
+      "created_at": "2018-08-17T12:45:24.841Z",
+      "updated_at": "2018-08-17T12:45:24.841Z"
     }
   ]
-}
-```
-# Api::Rest::PresignedUrls#create
-## POST /api/rest/presigned_urls
-### returns a pre-signed url
-Request to: `/api/rest/presigned_urls`
-
-Request parameters:
-```
-null
-```
-
-Request headers:
-
-```
-REQUEST_METHOD: POST
-RAW_POST_DATA: null
-HTTP_X_AUTH_TOKEN: 00000009
-HTTP_ACCEPT: application/json
-CONTENT_TYPE: application/json
-```
-_______
-Response status: `200 OK`
-
-Response body:
-
-```
-{
-  "presigned_url": "https://blabla.bla"
-}
-```
-### expires in 3 days
-Request to: `/api/rest/presigned_urls`
-
-Request parameters:
-```
-null
-```
-
-Request headers:
-
-```
-REQUEST_METHOD: POST
-RAW_POST_DATA: null
-HTTP_X_AUTH_TOKEN: 00000010
-HTTP_ACCEPT: application/json
-CONTENT_TYPE: application/json
-```
-_______
-Response status: `200 OK`
-
-Response body:
-
-```
-{
-  "presigned_url": "https://blabla.bla"
 }
 ```
 # Api::Rest::Memberships#create
@@ -369,7 +487,7 @@ Request parameters:
 ```
 {
   "membership": {
-    "event_id": 10
+    "event_id": 15
   }
 }
 ```
@@ -378,8 +496,8 @@ Request headers:
 
 ```
 REQUEST_METHOD: POST
-RAW_POST_DATA: {"membership":{"event_id":10}}
-HTTP_X_AUTH_TOKEN: 00000011
+RAW_POST_DATA: {"membership":{"event_id":15}}
+HTTP_X_AUTH_TOKEN: 00000016
 HTTP_ACCEPT: application/json
 CONTENT_TYPE: application/json
 ```
@@ -390,12 +508,12 @@ Response body:
 
 ```
 {
-  "id": 11,
-  "user_id": 11,
-  "event_id": 10,
+  "id": 17,
+  "user_id": 16,
+  "event_id": 15,
   "role": "attendee",
-  "created_at": "2018-08-12T22:27:23.114Z",
-  "updated_at": "2018-08-12T22:27:23.114Z"
+  "created_at": "2018-08-17T12:45:24.878Z",
+  "updated_at": "2018-08-17T12:45:24.878Z"
 }
 ```
 #### has attributes
@@ -405,7 +523,7 @@ Request parameters:
 ```
 {
   "membership": {
-    "event_id": 11
+    "event_id": 16
   }
 }
 ```
@@ -414,8 +532,8 @@ Request headers:
 
 ```
 REQUEST_METHOD: POST
-RAW_POST_DATA: {"membership":{"event_id":11}}
-HTTP_X_AUTH_TOKEN: 00000012
+RAW_POST_DATA: {"membership":{"event_id":16}}
+HTTP_X_AUTH_TOKEN: 00000017
 HTTP_ACCEPT: application/json
 CONTENT_TYPE: application/json
 ```
@@ -426,12 +544,12 @@ Response body:
 
 ```
 {
-  "id": 12,
-  "user_id": 12,
-  "event_id": 11,
+  "id": 18,
+  "user_id": 17,
+  "event_id": 16,
   "role": "attendee",
-  "created_at": "2018-08-12T22:27:23.139Z",
-  "updated_at": "2018-08-12T22:27:23.139Z"
+  "created_at": "2018-08-17T12:45:24.903Z",
+  "updated_at": "2018-08-17T12:45:24.903Z"
 }
 ```
 # Api::Rest::UserAccounts#create
@@ -464,7 +582,7 @@ Response body:
 
 ```
 {
-  "auth_token": "fM-ZbLZXfxxQ8z_9wikd",
+  "auth_token": "EDMs5EDec7ND7VP967Qd",
   "email": "test@example.com"
 }
 ```
@@ -496,7 +614,7 @@ Response body:
 
 ```
 {
-  "auth_token": "sk6n_8saACkFGaMSxePZ",
+  "auth_token": "m6oJDhioZ3tYUnLR2Sz7",
   "email": "test@example.com"
 }
 ```
@@ -528,7 +646,7 @@ Response body:
 
 ```
 {
-  "auth_token": "aybYz5ChKRwNUMRSYw2z",
+  "auth_token": "LxHyiYyNDjZ_zgyEy4wD",
   "email": "test@example.com"
 }
 ```
@@ -560,7 +678,7 @@ Response body:
 
 ```
 {
-  "auth_token": "zT4_2AgSQHnxeLB4xGci",
+  "auth_token": "wKdpz8bX1FMF3rzMJVXx",
   "email": "test@example.com"
 }
 ```
@@ -592,7 +710,7 @@ Response body:
 
 ```
 {
-  "auth_token": "FzoZ1G3J5eUKJoV7Vaj7",
+  "auth_token": "9vyt5sg_WsNquz8N4sWB",
   "email": "test@example.com"
 }
 ```
@@ -603,7 +721,7 @@ Request parameters:
 ```
 {
   "user_account": {
-    "email": "user_13@example.com",
+    "email": "user_18@example.com",
     "password": "password"
   }
 }
@@ -613,7 +731,7 @@ Request headers:
 
 ```
 REQUEST_METHOD: POST
-RAW_POST_DATA: {"user_account":{"email":"user_13@example.com","password":"password"}}
+RAW_POST_DATA: {"user_account":{"email":"user_18@example.com","password":"password"}}
 HTTP_ACCEPT: application/json
 CONTENT_TYPE: application/json
 ```
@@ -624,8 +742,8 @@ Response body:
 
 ```
 {
-  "auth_token": "bSjhWyt5nQUpR8e7F7cF",
-  "email": "user_13@example.com"
+  "auth_token": "uqoKSMRRYTf5L12Cpruk",
+  "email": "user_18@example.com"
 }
 ```
 ### when email taken
@@ -708,7 +826,7 @@ Request parameters:
 ```
 {
   "user_account": {
-    "email": "user_14@example.com",
+    "email": "user_19@example.com",
     "password": "password"
   }
 }
@@ -718,7 +836,7 @@ Request headers:
 
 ```
 REQUEST_METHOD: POST
-RAW_POST_DATA: {"user_account":{"email":"user_14@example.com","password":"password"}}
+RAW_POST_DATA: {"user_account":{"email":"user_19@example.com","password":"password"}}
 HTTP_ACCEPT: application/json
 CONTENT_TYPE: application/json
 ```
@@ -729,7 +847,7 @@ Response body:
 
 ```
 {
-  "auth_token": "00000014"
+  "auth_token": "00000019"
 }
 ```
 ### when given correct login information
@@ -740,7 +858,7 @@ Request parameters:
 ```
 {
   "user_account": {
-    "email": "user_15@example.com",
+    "email": "user_20@example.com",
     "password": "password"
   }
 }
@@ -750,7 +868,7 @@ Request headers:
 
 ```
 REQUEST_METHOD: POST
-RAW_POST_DATA: {"user_account":{"email":"user_15@example.com","password":"password"}}
+RAW_POST_DATA: {"user_account":{"email":"user_20@example.com","password":"password"}}
 HTTP_ACCEPT: application/json
 CONTENT_TYPE: application/json
 ```
@@ -761,7 +879,7 @@ Response body:
 
 ```
 {
-  "auth_token": "00000015"
+  "auth_token": "00000020"
 }
 ```
 ### when given incorrect login information
@@ -772,7 +890,7 @@ Request parameters:
 ```
 {
   "user_account": {
-    "email": "user_16@example.com",
+    "email": "user_21@example.com",
     "password": "incorrect"
   }
 }
@@ -782,7 +900,7 @@ Request headers:
 
 ```
 REQUEST_METHOD: POST
-RAW_POST_DATA: {"user_account":{"email":"user_16@example.com","password":"incorrect"}}
+RAW_POST_DATA: {"user_account":{"email":"user_21@example.com","password":"incorrect"}}
 HTTP_ACCEPT: application/json
 CONTENT_TYPE: application/json
 ```

@@ -9,9 +9,11 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :events, only: [:index, :create]
+      resources :events, only: [:index, :create] do
+        resources :images, only: [:create]
+      end
+
       resources :memberships, only: [:create]
-      resources :presigned_urls, only: [:create]
     end
   end
 end

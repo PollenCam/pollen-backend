@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_13_140708) do
+ActiveRecord::Schema.define(version: 2018_08_13_215846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,16 @@ ActiveRecord::Schema.define(version: 2018_07_13_140708) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["locator"], name: "index_events_on_locator", unique: true
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.text "presigned_url"
+    t.text "final_url"
+    t.datetime "uploaded_at"
+    t.bigint "membership_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["membership_id"], name: "index_images_on_membership_id"
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -84,6 +94,7 @@ ActiveRecord::Schema.define(version: 2018_07_13_140708) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "images", "memberships"
   add_foreign_key "memberships", "events"
   add_foreign_key "memberships", "users"
 end
