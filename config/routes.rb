@@ -9,10 +9,8 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :events, only: [:index, :create] do
-        resources :images, only: [:create]
-      end
-
+      resources :events, only: [:index, :create]
+      resources :images, only: [:create]
       resources :memberships, only: [:create]
     end
   end
